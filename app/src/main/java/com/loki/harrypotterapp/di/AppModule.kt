@@ -1,6 +1,8 @@
 package com.loki.harrypotterapp.di
 
+import com.loki.harrypotterapp.data.remote.CharacterListRepositoryImpl
 import com.loki.harrypotterapp.data.remote.HarryPotterApi
+import com.loki.harrypotterapp.domain.repository.CharacterListRepository
 import com.loki.harrypotterapp.util.Constants.BASE_URL
 import dagger.Module
 import dagger.Provides
@@ -22,5 +24,11 @@ object AppModule {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(HarryPotterApi::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideCharacterListRepository(api: HarryPotterApi): CharacterListRepository {
+        return CharacterListRepositoryImpl(api)
     }
 }
