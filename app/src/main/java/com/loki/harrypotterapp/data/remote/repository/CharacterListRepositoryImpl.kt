@@ -1,5 +1,6 @@
-package com.loki.harrypotterapp.data.remote
+package com.loki.harrypotterapp.data.remote.repository
 
+import com.loki.harrypotterapp.data.remote.HarryPotterApi
 import com.loki.harrypotterapp.domain.models.CharacterItem
 import com.loki.harrypotterapp.domain.repository.CharacterListRepository
 import com.loki.harrypotterapp.util.Resource
