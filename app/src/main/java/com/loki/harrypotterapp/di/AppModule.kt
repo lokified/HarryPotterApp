@@ -1,6 +1,6 @@
 package com.loki.harrypotterapp.di
 
-import com.loki.harrypotterapp.data.remote.CharacterListRepositoryImpl
+import com.loki.harrypotterapp.data.remote.repository.CharacterListRepositoryImpl
 import com.loki.harrypotterapp.data.remote.HarryPotterApi
 import com.loki.harrypotterapp.domain.repository.CharacterListRepository
 import com.loki.harrypotterapp.util.Constants.BASE_URL
