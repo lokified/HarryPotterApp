@@ -8,6 +8,7 @@ import androidx.navigation.navArgument
 import com.loki.harrypotterapp.ui.HarryPotterAppState
 import com.loki.harrypotterapp.ui.character_detail.CharacterDetailScreen
 import com.loki.harrypotterapp.ui.character_list.CharacterListScreen
+import com.loki.harrypotterapp.ui.search.SearchScreen
 import com.loki.harrypotterapp.util.Constants.CHAR_ID
 import com.loki.harrypotterapp.util.Constants.CHAR_NAME
 
@@ -48,6 +49,18 @@ fun Navigation(
                 )
             }
         }
+
+        composable(route = Screens.SearchScreen.route) {
+
+            SearchScreen(
+                popUpScreen = {
+                    appState.popUp()
+                },
+                openScreen = { route ->
+                    appState.navigate(route)
+                }
+            )
+        }
     }
 }
 
@@ -56,6 +69,7 @@ sealed class Screens(val route: String) {
 
     object CharacterListScreen: Screens("character_list_screen")
     object DetailScreen: Screens("details_screen")
+    object SearchScreen: Screens("search_screen")
 
     fun navWithArgs(): String {
         return "${DetailScreen.route}/{$CHAR_ID}/{$CHAR_NAME}"

@@ -12,13 +12,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
+import com.loki.harrypotterapp.R
 import com.loki.harrypotterapp.domain.models.CharacterItem
+import com.loki.harrypotterapp.util.Constants.DEFAULT_IMG_URL
 
 @OptIn(ExperimentalCoilApi::class, ExperimentalMaterialApi::class)
 @Composable
@@ -41,8 +44,12 @@ fun CharacterItem(
         ) {
 
             Box(modifier = Modifier.size(150.dp) ) {
+
+
                 Image(
-                    painter = rememberImagePainter(data = characterItem.image),
+                    painter = rememberImagePainter(
+                        data = if (!characterItem.image.isEmpty()) characterItem.image else DEFAULT_IMG_URL,
+                    ),
                     contentDescription = null,
                     modifier = Modifier
                         .fillMaxSize()
@@ -69,7 +76,7 @@ fun CharacterItem(
                     Text(
                         text = characterItem.ancestry,
                         color = MaterialTheme.colors.onBackground,
-                        modifier = Modifier.padding(top = 16.dp)
+                        modifier = Modifier.padding(top = 8.dp)
                     )
                 }
 
@@ -79,7 +86,7 @@ fun CharacterItem(
                         fontStyle = FontStyle.Italic,
                         fontSize = 12.sp,
                         color = MaterialTheme.colors.onBackground,
-                        modifier = Modifier.padding(top = 16.dp)
+                        modifier = Modifier.padding(top = 8.dp)
                     )
                 }
 

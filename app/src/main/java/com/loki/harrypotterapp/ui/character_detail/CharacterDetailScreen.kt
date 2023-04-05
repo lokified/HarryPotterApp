@@ -11,7 +11,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -21,9 +21,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
 import com.loki.harrypotterapp.domain.models.CharacterItem
+import com.loki.harrypotterapp.util.Constants
 
 @Composable
 fun CharacterDetailScreen(
@@ -32,7 +34,7 @@ fun CharacterDetailScreen(
     viewModel: CharacterDetailViewModel = hiltViewModel()
 ) {
 
-    val character = viewModel.characterDetail.collectAsState()
+    val character by viewModel.characterDetail.collectAsStateWithLifecycle()
 
     Column {
 
@@ -40,27 +42,32 @@ fun CharacterDetailScreen(
             popUpScreen()
         }
 
-        if (character.value.isLoading) {
+        if (character.isLoading) {
             Box(
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center
             ) {
-                CircularProgressIndicator()
+                CircularProgressIndicator(
+                    color = MaterialTheme.colors.onBackground
+                )
             }
         }
 
-        if (character.value.message.isNotEmpty()) {
+        if (character.message.isNotEmpty()) {
             Box(
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center
             ) {
-                Text(text = character.value.message)
+                Text(
+                    text = character.message,
+                    color = MaterialTheme.colors.onBackground
+                )
             }
         }
 
         Column(Modifier.verticalScroll(rememberScrollState())) {
 
-            character.value.characterDetail?.let {
+            character.characterDetail?.let {
 
                 TopSection(
                     characterItem = it,
@@ -164,7 +171,9 @@ fun TopSection(
                 contentAlignment = Alignment.TopCenter
             ) {
                 Image(
-                    painter = rememberImagePainter(data = characterItem.image),
+                    painter = rememberImagePainter(
+                        data = if (!characterItem.image.isEmpty()) characterItem.image else Constants.DEFAULT_IMG_URL,
+                    ),
                     contentDescription = null,
                     modifier = Modifier
                         .size(200.dp)

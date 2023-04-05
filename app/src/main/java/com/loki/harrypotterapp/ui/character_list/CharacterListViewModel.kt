@@ -8,6 +8,8 @@ import com.loki.harrypotterapp.domain.repository.CharacterListRepository
 import com.loki.harrypotterapp.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -18,13 +20,8 @@ class CharacterListViewModel @Inject constructor(
     private val repository: CharacterListRepository
 ): ViewModel() {
 
-    var characterList = mutableStateOf<List<CharacterItem>>(listOf())
-    var message = mutableStateOf("")
-    var isLoading = mutableStateOf(false)
-
-    private var searchedList = listOf<CharacterItem>()
-    private var isSearchEmpty = true
-    private var isSearching = mutableStateOf(false)
+    private val _characterListState = MutableStateFlow(CharacterListState())
+    val characterListState = _characterListState.asStateFlow()
 
     init {
         getCharacters()
@@ -37,48 +34,23 @@ class CharacterListViewModel @Inject constructor(
             when(result) {
 
                 is Resource.Loading -> {
-                    isLoading.value = true
+                    _characterListState.value = CharacterListState(
+                        isLoading = true
+                    )
                 }
 
                 is Resource.Error -> {
-                    isLoading.value = false
-                    message.value  = result.message ?: "Something went wrong"
+                    _characterListState.value = CharacterListState(
+                        message = result.message ?: "Something went wrong"
+                    )
                 }
 
                 is Resource.Success -> {
-
-                    message.value = ""
-                    isLoading.value = false
-                    characterList.value = result.data ?: emptyList()
+                    _characterListState.value = CharacterListState(
+                        characterList = result.data ?: emptyList()
+                    )
                 }
             }
         }.launchIn(viewModelScope)
-    }
-
-    fun searchCharacterList(query: String) {
-
-        val listToSearch = if (isSearchEmpty) characterList.value else searchedList
-
-        viewModelScope.launch(Dispatchers.Main) {
-
-            if (query.isEmpty()) {
-                characterList.value = searchedList
-                isSearching.value = false
-                isSearchEmpty = true
-                return@launch
-            }
-
-            val results = listToSearch.filter {
-                it.name.contains(query.trim(), ignoreCase = true)
-            }
-
-            if (isSearchEmpty) {
-                searchedList = characterList.value
-                isSearchEmpty = false
-            }
-
-            characterList.value = results
-            isSearching.value = true
-        }
     }
 }

@@ -25,7 +25,7 @@ class CharacterDetailViewModel @Inject constructor(
         }
     }
 
-    private fun getCharacterDetail(id: String) {
+    fun getCharacterDetail(id: String) {
 
         repository.getCharacterList().onEach { result ->
 
