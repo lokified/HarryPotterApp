@@ -2,6 +2,15 @@
 <resources>
 
     <style name="Theme.HarryPotterApp" parent="android:Theme.Material.Light.NoActionBar">
-        <item name="android:statusBarColor">@color/purple_700</item>
+        <item name="android:statusBarColor">@color/background_dark</item>
     </style>
+
+    <style name="Theme.HarryPotterApp.NoActionBar">
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.HarryPotterApp..AppBarOverlay" parent="Theme.HarryPotterApp.NoActionBar" />
+
+    <style name="Theme.HarryPotterApp..PopupOverlay" parent="Theme.HarryPotterApp.NoActionBar" />
 </resources>
