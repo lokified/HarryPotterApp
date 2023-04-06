@@ -29,7 +29,7 @@ class SearchViewModel @Inject constructor(
         getCharacters()
     }
 
-    private fun getCharacters() {
+    fun getCharacters() {
 
         repository.getCharacterList().onEach { result ->
 
