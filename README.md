@@ -1,6 +1,8 @@
 # HarryPotterApp
 Android app built with jetpack compose showing data of  harry potter the movie 
 
+[Download App](https://drive.google.com/file/d/1spzirpx2o5rnlgrem-gemxjgvm764wpe/view?usp=share_link)
+
 ### screenshots
 <p align="center">
 <h5> Home screen </h5>
