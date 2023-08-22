@@ -1,7 +1,7 @@
 # HarryPotterApp
-Android app built with jetpack compose showing data of  harry potter the movie 
+Android app built with jetpack compose showing data of  harry potter the movie
 
-[Download App](https://drive.google.com/file/d/1spzirpx2o5rnlgrem-gemxjgvm764wpe/view?usp=share_link)
+[Download App](https://drive.google.com/file/d/1SpZIRpX2O5rNlGReM-geMXjGvM764WPE/view)
 
 ### screenshots
 <p align="center">
